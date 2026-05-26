@@ -1,0 +1,320 @@
+:root {
+    /* Paleta Pastel Claro */
+    --bg-color: #f1f5f9;
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --primary-color: #4f46e5;
+    --primary-hover: #4338ca;
+    --secondary-color: #10b981;
+    --text-main: #334155;
+    --text-muted: #64748b;
+    --input-bg: rgba(255, 255, 255, 0.9);
+    --input-border: #cbd5e1;
+    --section-bg: rgba(248, 250, 252, 0.6);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Background Shapes for Glassmorphism effect */
+.background-shapes {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.shape {
+    position: absolute;
+    filter: blur(90px);
+    border-radius: 50%;
+    opacity: 0.5;
+}
+
+.shape-1 {
+    top: -10%; left: -10%;
+    width: 500px; height: 500px;
+    background: #a78bfa; /* Violeta pastel */
+}
+
+.shape-2 {
+    bottom: -20%; right: -10%;
+    width: 600px; height: 600px;
+    background: #7dd3fc; /* Azul pastel */
+}
+
+.glass-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #1e293b;
+}
+
+header p {
+    color: var(--text-muted);
+}
+
+.form-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--section-bg);
+    border-radius: 1rem;
+    border: 1px solid #e2e8f0;
+}
+
+.form-section h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.form-section h4 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.highlight-section {
+    border-left: 4px solid var(--primary-color);
+}
+
+.input-row {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.input-row > .input-group {
+    flex: 1;
+}
+
+.input-group {
+    margin-bottom: 1.25rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 0.5rem;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+/* Grilla de checkboxes para celular */
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    background: var(--input-bg);
+    padding: 1rem;
+    border: 1px solid var(--input-border);
+    border-radius: 0.5rem;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 1.2rem;
+    height: 1.2rem;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+}
+
+.checkbox-item label {
+    margin-bottom: 0;
+    font-weight: 400;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+/* Condicionales generales */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+}
+
+.toggle-checkbox {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+}
+
+.toggle-label {
+    margin-bottom: 0;
+    color: var(--text-main);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1.05rem;
+}
+
+.hidden-section {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--input-border);
+}
+
+.hidden-section.visible {
+    display: block;
+    opacity: 1;
+}
+
+/* Sub formulario personal */
+.sub-form {
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.6);
+    border-radius: 0.75rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+.tech-list-container h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+#techList {
+    list-style: none;
+}
+
+#techList li {
+    background: #ffffff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.btn-remove {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.75rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+/* Botones */
+button {
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 1.1rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+}
+
+.btn-secondary {
+    padding: 0.85rem 1.5rem;
+    background: #e2e8f0;
+    color: var(--text-main);
+    border: none;
+    border-radius: 0.5rem;
+    width: 100%;
+}
+
+.btn-secondary:hover {
+    background: #cbd5e1;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .input-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .glass-container {
+        padding: 1.5rem;
+        border-radius: 1rem;
+    }
+}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ME Digital - Reporte Terreno</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <main class="glass-container">
+        <header>
+            <h1>Reporte de Terreno</h1>
+            <p>ME Digital - Plataforma de Gestión</p>
+        </header>
+
+        <form id="reportForm">
+            <!-- Sección 1: Información General -->
+            <section class="form-section">
+                <h2>1. Información General</h2>
+                <div class="input-group">
+                    <label for="cliente">Cliente</label>
+                    <input type="text" id="cliente" required placeholder="Ej: CODELCO">
+                </div>
+                <div class="input-group">
+                    <label for="faena">Minera / Faena</label>
+                    <input type="text" id="faena" required placeholder="Ej: Teniente">
+                </div>
+                <div class="input-group">
+                    <label for="planta">Planta</label>
+                    <input type="text" id="planta" required>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="fecha">Fecha del Servicio</label>
+                        <input type="date" id="fecha" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="lider">Líder a Cargo (KAM)</label>
+                        <!-- Se llena dinámicamente desde app.js -->
+                        <select id="lider" required>
+                            <option value="">Seleccionar...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="descripcion">Descripción General del Servicio</label>
+                    <textarea id="descripcion" rows="3" required></textarea>
+                </div>
+            </section>
+
+            <!-- Sección 2: Detalle Personal (Sub-formulario) -->
+            <section class="form-section highlight-section">
+                <h2>2. Registro de Actividades del Personal</h2>
+                
+                <div class="sub-form" id="techForm">
+                    <div class="input-group">
+                        <label for="persona">Personal (Persona ME)</label>
+                        <!-- Se llena dinámicamente desde app.js -->
+                        <select id="persona">
+                            <option value="">Seleccionar...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Códigos de Tarea (Puedes marcar varias)</label>
+                        <!-- Checkboxes generados dinámicamente -->
+                        <div class="checkbox-grid" id="container_tareas"></div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="tipo_cliente">Tipo Cliente</label>
+                        <select id="tipo_cliente">
+                            <option value="Interno">Interno</option>
+                            <option value="Externo">Externo</option>
+                        </select>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="hora_inicio">Hora Inicio (Normal)</label>
+                            <input type="time" id="hora_inicio">
+                        </div>
+                        <div class="input-group">
+                            <label for="hora_fin">Hora Fin (Normal)</label>
+                            <input type="time" id="hora_fin">
+                        </div>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="horas_extra_dia">Horas Extra Día</label>
+                            <input type="number" id="horas_extra_dia" min="0" step="0.5" placeholder="Ej: 2.5">
+                        </div>
+                        <div class="input-group">
+                            <label for="horas_extra_noche">Horas Extra Noche</label>
+                            <input type="number" id="horas_extra_noche" min="0" step="0.5" placeholder="Ej: 1">
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-secondary" id="btnAddTech">Añadir Persona al Reporte</button>
+                </div>
+
+                <div class="tech-list-container">
+                    <h3>Personal Agregado:</h3>
+                    <ul id="techList"></ul>
+                </div>
+            </section>
+
+            <!-- Sección 3: Seguridad -->
+            <section class="form-section">
+                <h2>3. Seguridad</h2>
+                <div class="input-group">
+                    <label for="riesgos">Riesgos Detectados</label>
+                    <textarea id="riesgos" rows="2"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="mitigacion">Mitigación</label>
+                    <textarea id="mitigacion" rows="2"></textarea>
+                </div>
+            </section>
+
+            <!-- Sección 4: Logística (Condicional) -->
+            <section class="form-section">
+                <h2>4. Control Logístico</h2>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="hubo_traslados" class="toggle-checkbox">
+                    <label for="hubo_traslados" class="toggle-label">¿El equipo requirió traslados?</label>
+                </div>
+                
+                <div id="logistica_container" class="hidden-section">
+                    <h4>Trayecto de IDA</h4>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="ida_fecha">Fecha</label>
+                            <input type="date" id="ida_fecha">
+                        </div>
+                        <div class="input-group">
+                            <label for="ida_salida">Hora Salida</label>
+                            <input type="time" id="ida_salida">
+                        </div>
+                        <div class="input-group">
+                            <label for="ida_llegada">Hora Llegada</label>
+                            <input type="time" id="ida_llegada">
+                        </div>
+                    </div>
+                    
+                    <h4>Trayecto de REGRESO</h4>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="regreso_fecha">Fecha</label>
+                            <input type="date" id="regreso_fecha">
+                        </div>
+                        <div class="input-group">
+                            <label for="regreso_salida">Hora Salida</label>
+                            <input type="time" id="regreso_salida">
+                        </div>
+                        <div class="input-group">
+                            <label for="regreso_llegada">Hora Llegada</label>
+                            <input type="time" id="regreso_llegada">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección 5: Comercial (Condicional) -->
+            <section class="form-section">
+                <h2>5. Oportunidad Comercial</h2>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="hubo_oportunidad" class="toggle-checkbox">
+                    <label for="hubo_oportunidad" class="toggle-label">¿Se detectó alguna oportunidad comercial u operacional?</label>
+                </div>
+
+                <div id="comercial_container" class="hidden-section">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="codigo_oportunidad">Código Oportunidad</label>
+                            <!-- Se llena dinámicamente desde app.js -->
+                            <select id="codigo_oportunidad">
+                                <option value="">Seleccionar...</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="area_oportunidad">Área</label>
+                            <input type="text" id="area_oportunidad">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="descripcion_oportunidad">Descripción de la Oportunidad</label>
+                        <textarea id="descripcion_oportunidad" rows="2"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <button type="submit" class="btn-primary" id="btnSubmit">Enviar Reporte M365</button>
+        </form>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
