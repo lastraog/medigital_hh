@@ -308,13 +308,55 @@ button {
 
 /* Responsive */
 @media (max-width: 640px) {
+    body {
+        padding: 0;
+        background-color: #ffffff;
+    }
+    
+    .background-shapes {
+        display: none;
+    }
+
     .input-row {
         flex-direction: column;
         gap: 0;
     }
     
     .glass-container {
-        padding: 1.5rem;
-        border-radius: 1rem;
+        padding: 1rem;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    .form-section {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #e2e8f0;
+        background: #fafafa;
+    }
+
+    .sub-form {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        background: #ffffff;
+    }
+    
+    header {
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    input[type="number"],
+    select,
+    textarea {
+        padding: 0.6rem 0.8rem;
     }
 }

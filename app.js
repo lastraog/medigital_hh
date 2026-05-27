@@ -1,16 +1,92 @@
 // --- BASES DE DATOS ESTÁTICAS (FÁCILES DE EDITAR) ---
 const DB_LIDERES = [
+    "Andrés Benedicto Leiva",
+    "Benjamín Ronaldo Díaz",
     "Carlos Jara G.",
-    "Rubén Andrés Meza",
+    "Diego Eduardo Fuentes",
+    "Eduardo Andrés Menares",
+    "Enzo Alejandro Delgado",
+    "Héctor Andrés Mondaca",
+    "Henry Horacio Ardiles",
+    "José Alfredo Abarca",
+    "Rodolfo Maximiliano Guzmán",
+    "Rodrigo Alan Irigoyen",
     "Rodrigo Nicolás Pérez",
-    "Admin Líder"
+    "Rubén Andrés Meza",
+    "Sebastián Rodrigo Pérez",
+    "Tamara Fernanda Hernández",
+    "Zibor Alejandro Obreque"
 ];
 
 const DB_PERSONAL = [
-    "Aldo Ramirez",
-    "Zibor Obreque",
-    "Juan Pérez",
-    "María González"
+    "Aldo Stefano Ramírez",
+    "Andrés Benedicto Leiva",
+    "Anita Valentina Córdova",
+    "Ariel Marcelo Medina",
+    "Benjamín Ronaldo Díaz",
+    "Camila Isabel Chandía",
+    "Camilo Sebastián Trujillo",
+    "Carlos Felipe Valdés",
+    "Claudio Nicolás Silva",
+    "Constanza Gabriel González",
+    "Cristopher Raúl Santander",
+    "Daniel Ángel Arango",
+    "Diego Alonso Moreno",
+    "Diego Eduardo Fuentes",
+    "Eduardo Andrés Menares",
+    "Eduardo Enrique Alvarado",
+    "Enzo Alejandro Delgado",
+    "Esteban Andrés Lagos",
+    "Felipe Esteban Herrera",
+    "Francisco Javier Rojas",
+    "Freddy Aaron López",
+    "Gonzalo Andrés Rojas",
+    "Guillermo Marcelo Enrique Lastra",
+    "Héctor Andrés Mondaca",
+    "Henry Horacio Ardiles",
+    "Hugo Javier Bruna",
+    "Ignacio Benjamín Tapia",
+    "Ignacio Gabriel Durán",
+    "Ignacio Javier González",
+    "Iván Alejandro Navarrete",
+    "Javier Enrique Cruz",
+    "Jesús Aroon Aballay",
+    "Jorge Alberto Chávez",
+    "José Alfredo Abarca",
+    "Juan Luis Aguilera",
+    "Juan Manuel Leon",
+    "Juan Pablo Briceño",
+    "Julio Andrés Salas",
+    "Lucas Ignacio Saez",
+    "María Ignacia Carvacho",
+    "María José Ramírez",
+    "Mario Andrés Moscoso",
+    "Matías Nicolás Villalobos",
+    "Melanie Ivania Lira",
+    "Miguel Andrés Garcés",
+    "Nasly Stefany Rondon",
+    "Nicolás Alberto Grez",
+    "Oskar Karim García",
+    "Pablo Cristian Ortiz",
+    "Ramiro Andrés López",
+    "René Alejandro Guzmán",
+    "Ricardo Ignacio Piña",
+    "Rino Christian Paredes",
+    "Roberto Jesús Narváez",
+    "Rodolfo Maximiliano Guzmán",
+    "Rodrigo Alan Irigoyen",
+    "Rodrigo Nicolás Pérez",
+    "Rubén Andrés Meza",
+    "Samuel Alejandro Escobar",
+    "Sebastián Alejandro Rodríguez",
+    "Sebastián Enrique Segura",
+    "Sebastián Rodrigo Pérez",
+    "Sergio Aníbal Pinto",
+    "Tamara Alejandra González",
+    "Tamara Eugenia Rubio",
+    "Tamara Fernanda Hernández",
+    "Tomás Ignacio Verdugo",
+    "Zibor Alejandro Obreque"
 ];
 
 const DB_TAREAS = [
@@ -127,6 +203,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const tipoCliente = document.getElementById('tipo_cliente');
         const inicioAM = document.getElementById('hora_inicio');
         const finAM = document.getElementById('hora_fin');
+        const inicioPM = document.getElementById('hora_inicio_pm');
+        const finPM = document.getElementById('hora_fin_pm');
         const heDia = document.getElementById('horas_extra_dia');
         const heNoche = document.getElementById('horas_extra_noche');
 
@@ -153,6 +231,8 @@ document.addEventListener('DOMContentLoaded', () => {
             Tipo_Cliente: tipoCliente.value,
             Hora_Inicio_AM: inicioAM.value,
             Hora_Fin_AM: finAM.value,
+            Hora_Inicio_PM: inicioPM ? inicioPM.value : '',
+            Hora_Fin_PM: finPM ? finPM.value : '',
             Horas_Extra_Dia: heDia.value || 0,
             Horas_Extra_Noche: heNoche.value || 0
         };
@@ -164,6 +244,8 @@ document.addEventListener('DOMContentLoaded', () => {
         personaSelect.value = '';
         inicioAM.value = '';
         finAM.value = '';
+        if(inicioPM) inicioPM.value = '';
+        if(finPM) finPM.value = '';
         heDia.value = '';
         heNoche.value = '';
         checkboxesTareas.forEach(chk => chk.checked = false);
@@ -176,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
             li.innerHTML = `
                 <div>
                     <strong>${tech.Persona_ME}</strong><br>
-                    <small>Tareas: ${tech.Codigo_Trabajo} | H. Extra Día: ${tech.Horas_Extra_Dia} | H. Extra Noche: ${tech.Horas_Extra_Noche}</small>
+                    <small>Tareas: ${tech.Codigo_Trabajo} | AM: ${tech.Hora_Inicio_AM}-${tech.Hora_Fin_AM} | PM: ${tech.Hora_Inicio_PM}-${tech.Hora_Fin_PM} | HE-D: ${tech.Horas_Extra_Dia} | HE-N: ${tech.Horas_Extra_Noche}</small>
                 </div>
                 <button type="button" class="btn-remove" onclick="removeTech(${tech.id})">Quitar</button>
             `;
@@ -232,34 +314,17 @@ document.addEventListener('DOMContentLoaded', () => {
             Descripcion_Oportunidad: document.getElementById('descripcion_oportunidad').value
         };
 
-        // 2. Construir el Cuerpo del Correo Estructurado
-        // Usamos etiquetas tipo [CAMPO] para que Power Automate extraiga los valores fácilmente.
-        let bodyText = "=== INICIO REPORTE DE TERRENO ===\n\n";
-        
-        bodyText += "[MAESTRO]\n";
-        bodyText += `[Cliente]${reporteMaestro.Cliente}[/Cliente]\n`;
-        bodyText += `[Faena]${reporteMaestro.Minera_Faena}[/Faena]\n`;
-        bodyText += `[Planta]${reporteMaestro.Planta}[/Planta]\n`;
-        bodyText += `[Fecha]${reporteMaestro.Fecha_Servicio}[/Fecha]\n`;
-        bodyText += `[Lider]${reporteMaestro.Lider_Cargo}[/Lider]\n`;
-        bodyText += `[Descripcion]${reporteMaestro.Descripcion_General}[/Descripcion]\n`;
-        bodyText += `[Riesgos]${reporteMaestro.Riesgos_Detectados}[/Riesgos]\n`;
-        bodyText += `[Mitigacion]${reporteMaestro.Mitigacion}[/Mitigacion]\n`;
-        bodyText += `[Traslados]${reporteMaestro.Hubo_Traslados}[/Traslados]\n`;
-        bodyText += `[IdaFecha]${reporteMaestro.IDA_Fecha}[/IdaFecha] | [IdaSalida]${reporteMaestro.IDA_Hora_Salida}[/IdaSalida] | [IdaLlegada]${reporteMaestro.IDA_Hora_Llegada}[/IdaLlegada]\n`;
-        bodyText += `[RegresoFecha]${reporteMaestro.REGRESO_Fecha}[/RegresoFecha] | [RegresoSalida]${reporteMaestro.REGRESO_Hora_Salida}[/RegresoSalida] | [RegresoLlegada]${reporteMaestro.REGRESO_Hora_Llegada}[/RegresoLlegada]\n`;
-        bodyText += `[Oportunidades]${reporteMaestro.Hubo_Oportunidad}[/Oportunidades]\n`;
-        bodyText += `[CodigoOp]${reporteMaestro.Codigo_Oportunidad}[/CodigoOp] | [AreaOp]${reporteMaestro.Area_Oportunidad}[/AreaOp]\n`;
-        bodyText += `[DescOp]${reporteMaestro.Descripcion_Oportunidad}[/DescOp]\n`;
-        bodyText += "[/MAESTRO]\n\n";
+        // 2. Construir el Cuerpo del Correo como JSON
+        const payloadJSON = {
+            ...reporteMaestro,
+            Tecnicos: tecnicosDetalle.map(t => {
+                const { id, ...resto } = t; // quitamos el id temporal
+                return resto;
+            })
+        };
 
-        bodyText += "[DETALLES]\n";
-        tecnicosDetalle.forEach((tech, index) => {
-            // Cada línea es una persona, separada por Pipes |
-            bodyText += `[PERSONA] [Nombre]${tech.Persona_ME}[/Nombre] | [Tareas]${tech.Codigo_Trabajo}[/Tareas] | [Tipo]${tech.Tipo_Cliente}[/Tipo] | [Inicio]${tech.Hora_Inicio_AM}[/Inicio] | [Fin]${tech.Hora_Fin_AM}[/Fin] | [HEDia]${tech.Horas_Extra_Dia}[/HEDia] | [HENoche]${tech.Horas_Extra_Noche}[/HENoche] [/PERSONA]\n`;
-        });
-        bodyText += "[/DETALLES]\n\n";
-        bodyText += "=== FIN REPORTE DE TERRENO ===";
+        // Formatear JSON con 2 espacios para que sea limpio y legible
+        const bodyText = JSON.stringify(payloadJSON, null, 2);
 
         // 3. Generar el enlace Mailto
         // CAMBIA ESTE CORREO POR LA BANDEJA QUE RECIBIRÁ LOS REPORTES (ej: reportes@tuempresa.com)
