@@ -71,6 +71,14 @@
                     </div>
 
                     <div class="input-group">
+                        <label for="codigo_oportunidad">Código Oportunidad (Opcional)</label>
+                        <!-- Se llena dinámicamente desde app.js -->
+                        <select id="codigo_oportunidad">
+                            <option value="">Ninguna...</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
                         <label for="tipo_cliente">Tipo Cliente</label>
                         <select id="tipo_cliente">
                             <option value="Interno">Interno</option>
@@ -116,6 +124,11 @@
                 <div class="tech-list-container">
                     <h3>Personal Agregado:</h3>
                     <ul id="techList"></ul>
+                </div>
+
+                <div class="input-group" style="margin-top: 20px;">
+                    <label for="detalle_actividades">Detalle de las Actividades (General)</label>
+                    <textarea id="detalle_actividades" rows="3" placeholder="Explaye las actividades realizadas por el equipo listado..."></textarea>
                 </div>
             </section>
 
@@ -184,18 +197,9 @@
                 </div>
 
                 <div id="comercial_container" class="hidden-section">
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label for="codigo_oportunidad">Código Oportunidad</label>
-                            <!-- Se llena dinámicamente desde app.js -->
-                            <select id="codigo_oportunidad">
-                                <option value="">Seleccionar...</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label for="area_oportunidad">Área</label>
-                            <input type="text" id="area_oportunidad">
-                        </div>
+                    <div class="input-group">
+                        <label for="area_oportunidad">Área de la Oportunidad</label>
+                        <input type="text" id="area_oportunidad">
                     </div>
                     <div class="input-group">
                         <label for="descripcion_oportunidad">Descripción de la Oportunidad</label>

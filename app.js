@@ -185,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
             containerComercial.classList.add('visible');
         } else {
             containerComercial.classList.remove('visible');
-            document.getElementById('codigo_oportunidad').value = '';
             document.getElementById('area_oportunidad').value = '';
             document.getElementById('descripcion_oportunidad').value = '';
         }
@@ -200,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnAddTech.addEventListener('click', () => {
         const personaSelect = document.getElementById('persona');
+        const codOportunidad = document.getElementById('codigo_oportunidad');
         const tipoCliente = document.getElementById('tipo_cliente');
         const inicioAM = document.getElementById('hora_inicio');
         const finAM = document.getElementById('hora_fin');
@@ -228,13 +228,14 @@ document.addEventListener('DOMContentLoaded', () => {
             id: Date.now(), // ID temporal para UI
             Persona_ME: personaName,
             Codigo_Trabajo: tareasArray.join(', '),
+            Codigo_Oportunidad: codOportunidad.value,
             Tipo_Cliente: tipoCliente.value,
             Hora_Inicio_AM: inicioAM.value,
             Hora_Fin_AM: finAM.value,
             Hora_Inicio_PM: inicioPM ? inicioPM.value : '',
             Hora_Fin_PM: finPM ? finPM.value : '',
-            Horas_Extra_Dia: heDia.value || 0,
-            Horas_Extra_Noche: heNoche.value || 0
+            Horas_Extra_Dia: heDia.value ? parseFloat(heDia.value) : 0,
+            Horas_Extra_Noche: heNoche.value ? parseFloat(heNoche.value) : 0
         };
 
         tecnicosDetalle.push(fila);
@@ -248,6 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(finPM) finPM.value = '';
         heDia.value = '';
         heNoche.value = '';
+        codOportunidad.value = '';
         checkboxesTareas.forEach(chk => chk.checked = false);
     });
 
@@ -258,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
             li.innerHTML = `
                 <div>
                     <strong>${tech.Persona_ME}</strong><br>
-                    <small>Tareas: ${tech.Codigo_Trabajo} | AM: ${tech.Hora_Inicio_AM}-${tech.Hora_Fin_AM} | PM: ${tech.Hora_Inicio_PM}-${tech.Hora_Fin_PM} | HE-D: ${tech.Horas_Extra_Dia} | HE-N: ${tech.Horas_Extra_Noche}</small>
+                    <small>Tareas: ${tech.Codigo_Trabajo} | Op: ${tech.Codigo_Oportunidad || 'N/A'} | AM: ${tech.Hora_Inicio_AM}-${tech.Hora_Fin_AM} | PM: ${tech.Hora_Inicio_PM}-${tech.Hora_Fin_PM} | HE-D: ${tech.Horas_Extra_Dia} | HE-N: ${tech.Horas_Extra_Noche}</small>
                 </div>
                 <button type="button" class="btn-remove" onclick="removeTech(${tech.id})">Quitar</button>
             `;
@@ -296,6 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
             Fecha_Servicio: document.getElementById('fecha').value,
             Lider_Cargo: document.getElementById('lider').value,
             Descripcion_General: document.getElementById('descripcion').value,
+            Detalle_Actividades: document.getElementById('detalle_actividades').value,
             
             Riesgos_Detectados: document.getElementById('riesgos').value,
             Mitigacion: document.getElementById('mitigacion').value,
@@ -309,7 +312,6 @@ document.addEventListener('DOMContentLoaded', () => {
             REGRESO_Hora_Llegada: document.getElementById('regreso_llegada').value,
             
             Hubo_Oportunidad: chkOportunidad.checked,
-            Codigo_Oportunidad: document.getElementById('codigo_oportunidad').value,
             Area_Oportunidad: document.getElementById('area_oportunidad').value,
             Descripcion_Oportunidad: document.getElementById('descripcion_oportunidad').value
         };
