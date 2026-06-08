@@ -107,16 +107,16 @@ const DB_TAREAS = [
 ];
 
 const DB_OPORTUNIDADES = [
-    { id: "O01", desc: "Asbuil Estanques" },
-    { id: "O02", desc: "Asbuil Harneros" },
-    { id: "O03", desc: "Asbuil Espesadores" },
+    { id: "O01", desc: "As built Estanques" },
+    { id: "O02", desc: "As built Harneros" },
+    { id: "O03", desc: "As built Espesadores" },
     { id: "O04", desc: "Auditorias Inst pernos" },
     { id: "O05", desc: "Cambios de Corona" },
-    { id: "O06", desc: "Revestimiento de Shute" },
+    { id: "O06", desc: "Revestimiento de Chute" },
     { id: "O07", desc: "Sesorización de Pernos SMTP" },
     { id: "O08", desc: "Perfect Blend" },
     { id: "O09", desc: "Trustgap" },
-    { id: "O10", desc: "QuickScan Chandado" },
+    { id: "O10", desc: "QuickScan Chancado" },
     { id: "O11", desc: "QuickScan Molino" },
     { id: "O12", desc: "ME Tracking Liners" },
     { id: "O13", desc: "Alineamiento vibraciones" },
