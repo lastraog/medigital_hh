@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const reportForm = document.getElementById('reportForm');
     
     // IMPORTANTE: URL de Power Automate (Webhook)
-    const POWER_AUTOMATE_URL = "https://default9cf7286d09ba4374992beda30168c6.23.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/52f2ed67fe02400b8913f60a9a4e807a/triggers/manual/paths/invoke?api-version=1"; 
+    const POWER_AUTOMATE_URL = "https://default9cf7286d09ba4374992beda30168c6.23.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/52f2ed67fe02400b8913f60a9a4e807a/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=efXgGDKGRLWuVW-gDi4-p8Ny-5Jm_XyCKcRn3HAKhf0"; 
     
     reportForm.addEventListener('submit', async (e) => {
         e.preventDefault();
