@@ -22,15 +22,18 @@
                 <h2>1. Información General</h2>
                 <div class="input-group">
                     <label for="cliente">Cliente</label>
-                    <input type="text" id="cliente" required placeholder="Ej: CODELCO">
+                    <input type="text" id="cliente" list="dl_cliente" required placeholder="Escribe para buscar o ingresa uno nuevo...">
+                    <datalist id="dl_cliente"></datalist>
                 </div>
                 <div class="input-group">
                     <label for="faena">Minera / Faena</label>
-                    <input type="text" id="faena" required placeholder="Ej: Teniente">
+                    <input type="text" id="faena" list="dl_faena" required placeholder="Escribe para buscar o ingresa una nueva...">
+                    <datalist id="dl_faena"></datalist>
                 </div>
                 <div class="input-group">
                     <label for="planta">Planta</label>
-                    <input type="text" id="planta" required>
+                    <input type="text" id="planta" list="dl_planta" required placeholder="Escribe para buscar...">
+                    <datalist id="dl_planta"></datalist>
                 </div>
                 <div class="input-row">
                     <div class="input-group">
@@ -40,9 +43,8 @@
                     <div class="input-group">
                         <label for="lider">Líder a Cargo (KAM)</label>
                         <!-- Se llena dinámicamente desde app.js -->
-                        <select id="lider" required>
-                            <option value="">Seleccionar...</option>
-                        </select>
+                        <input type="text" id="lider" list="dl_lider" required placeholder="Escribe para buscar líder...">
+                        <datalist id="dl_lider"></datalist>
                     </div>
                 </div>
                 <div class="input-group">
@@ -59,9 +61,8 @@
                     <div class="input-group">
                         <label for="persona">Personal (Persona ME)</label>
                         <!-- Se llena dinámicamente desde app.js -->
-                        <select id="persona">
-                            <option value="">Seleccionar...</option>
-                        </select>
+                        <input type="text" id="persona" list="dl_persona" placeholder="Escribe para buscar personal...">
+                        <datalist id="dl_persona"></datalist>
                     </div>
                     
                     <div class="input-group">

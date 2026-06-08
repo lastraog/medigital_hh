@@ -1,4 +1,41 @@
 // --- BASES DE DATOS ESTÁTICAS (FÁCILES DE EDITAR) ---
+const DB_CLIENTES = [
+    "Codelco", "ENAMI", "BHP", "Antofagasta Minerals", "Anglo American", "Glencore", "Teck Resources", "Lundin Mining",
+    "Freeport-McMoRan", "KGHM International", "Capstone Copper", "Kinross Gold", "Rio Tinto (Exploraciones y alianzas)",
+    "Barrick Gold", "SQM (Sociedad Química y Minera de Chile)", "Albemarle", "CAP Minería (Compañía Minera del Pacífico)",
+    "Pucobre", "Cemin Holding Minero", "Minera Valparaíso (Grupo Matte)", "Copec S.A. (Minería Activa / Alcon)",
+    "Yamana Gold (Pan American Silver)", "Amerigo Resources (Minera Valle Central)", "Compañía Minera Antamina",
+    "Southern Peru Copper Corporation (Grupo México)", "Minera Las Bambas (MMG Limited)", "Minera Chinalco Perú",
+    "Anglo American Quellaveco", "Sociedad Minera Cerro Verde", "Marcobre", "Hudbay Peru", "Glencore (Antapaccay)",
+    "Compañía de Minas Buenaventura", "Minera Yanacocha (Newmont)", "Minsur (Grupo Breca)", "Consorcio Minero Horizonte",
+    "Compañía Minera Poderosa", "Gold Fields La Cima", "Nexa Resources", "Volcan Compañía Minera (Transition Metals)",
+    "Shougang Hierro Perú", "Pan American Silver", "Rio Tinto (Proyecto La Granja)", "Barrick Gold (Perú)",
+    "Freeport-McMoRan (Perú)", "Teck Resources (Perú)", "Hochschild Mining", "Minera Ares", "Compañía Minera Zafranal",
+    "Shahuindo S.A.C.", "Chinalco Perú", "Trevali Mining", "Sierra Metals", "Minera Aurífera Retamas (MARSA)", "Gold Fields"
+];
+
+const DB_FAENAS = [
+    "Chuquicamata", "El Teniente", "Radomiro Tomic", "Ministro Hales", "Andina", "Gabriela Mistral", "Salvador",
+    "Escondida", "Collahuasi", "Los Pelambres", "Los Bronces", "Centinela", "Quebrada Blanca (QB2)", "Caserones",
+    "Sierra Gorda", "Spence", "El Abra", "Mantos Blancos", "Mantoverde", "Antucoya", "Zaldívar", "El Soldado",
+    "Mina Candelaria", "La Coipa", "Lomas Bayas", "Salares Norte", "El Peñón", "Ojos del Salado", "Carmen de Andacollo",
+    "Cerro Colorado", "Los Colorados", "Cerro Negro Norte", "Minas El Romeral", "Salar de Atacama", "Florida",
+    "Antamina", "Cerro Verde", "Las Bambas", "Quellaveco", "Toquepala", "Cuajone", "Toromocho", "Antapaccay",
+    "Mina Justa", "Constancia", "Yanacocha", "Cerro Corona", "San Rafael", "Lagunas Norte", "Pucamarca", "Cerro Lindo",
+    "El Porvenir", "Marcona", "Huaron", "Shahuindo", "Uchucchacua", "Orcopampa", "Tambomayo", "Inmaculada",
+    "Pallancata", "Atacocha", "Yauli", "Chungar", "Poderosa", "Retamas", "Otros"
+];
+
+const DB_PLANTAS = [
+    "Mina a Rajo Abierto (Pit)", "Mina Subterránea", "Área de Stockpile (Acopio de Minerales / Gruesos y Finos)",
+    "Silos de Almacenamiento", "Botaderos de Estéril", "Chancado Primario", "Chancado Secundario y Terciario",
+    "Chancado de Pebbles", "Molienda SAG", "Molienda de Bolas", "Molienda de Barras", "Molienda HPGR (Rodillos a Alta Presión)",
+    "Flotación", "Espesamiento", "Filtrado", "Secado", "Aglomeración", "Lixiviación (Pilas / ROM)",
+    "Lixiviación por Agitación", "Extracción por Solventes (SX)", "Electroobtención (EW)", "Precipitación (Merrill-Crowe)",
+    "Adsorción, Desorción y Recuperación (ADR - Carbón Activado)", "Tostación", "Fundición (Hornos y Convertidores)",
+    "Limpieza de Escorias", "Refinería (Electrorrefinación)", "Tranque o Depósito de Relaves (Convencionales / Espesados / Filtrados)",
+    "Relleno en Pasta (Backfill)", "Recuperación de Agua", "Tratamiento de Aguas Industriales (Riles)", "Desaladora", "Ácido Sulfúrico"
+];
 const DB_LIDERES = [
     "Andrés Benedicto Leiva",
     "Benjamín Ronaldo Díaz",
@@ -130,16 +167,27 @@ const DB_OPORTUNIDADES = [
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- CARGAR DATOS DINÁMICOS ---
-    const selectLider = document.getElementById('lider');
-    DB_LIDERES.forEach(lider => {
-        selectLider.add(new Option(lider, lider));
-    });
+    // --- FUNCION AUXILIAR PARA LLENAR DATALISTS (CON ORDEN ALFABÉTICO) ---
+    function populateDatalist(datalistId, dataArray) {
+        const datalist = document.getElementById(datalistId);
+        if(!datalist) return;
+        
+        // Ordenar alfabéticamente ignorando mayúsculas/acentos
+        const sortedArray = [...dataArray].sort((a, b) => a.localeCompare(b, 'es'));
+        
+        sortedArray.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item;
+            datalist.appendChild(option);
+        });
+    }
 
-    const selectPersona = document.getElementById('persona');
-    DB_PERSONAL.forEach(persona => {
-        selectPersona.add(new Option(persona, persona));
-    });
+    // --- CARGAR DATOS DINÁMICOS EN LOS AUTOSUGERIDOS ---
+    populateDatalist('dl_cliente', DB_CLIENTES);
+    populateDatalist('dl_faena', DB_FAENAS);
+    populateDatalist('dl_planta', DB_PLANTAS);
+    populateDatalist('dl_lider', DB_LIDERES);
+    populateDatalist('dl_persona', DB_PERSONAL);
 
     const selectOportunidad = document.getElementById('codigo_oportunidad');
     DB_OPORTUNIDADES.forEach(op => {
