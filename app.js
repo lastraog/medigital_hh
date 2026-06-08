@@ -274,8 +274,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    // --- LÓGICA DE ENVÍO FINAL (MAILTO BRIDGE) ---
+    // --- LÓGICA DE ENVÍO FINAL (VERSIÓN 2.0 API DIRECTA) ---
     const reportForm = document.getElementById('reportForm');
+    
+    // IMPORTANTE: URL de Power Automate (Webhook)
+    const POWER_AUTOMATE_URL = "https://default9cf7286d09ba4374992beda30168c6.23.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/52f2ed67fe02400b8913f60a9a4e807a/triggers/manual/paths/invoke?api-version=1"; 
     
     reportForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -285,9 +288,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        if(!POWER_AUTOMATE_URL) {
+            alert('ERROR: Falta configurar la URL de Power Automate en el código web. Pide al administrador que inserte la URL HTTP.');
+            return;
+        }
+
         const btnSubmit = document.getElementById('btnSubmit');
         const btnOriginalText = btnSubmit.innerText;
-        btnSubmit.innerText = 'Generando Correo...';
+        btnSubmit.innerText = 'Transmitiendo Datos...';
         btnSubmit.disabled = true;
 
         // 1. Recopilar datos del Maestro
@@ -325,29 +333,36 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         };
 
-        // Formatear JSON con 2 espacios para que sea limpio y legible
-        const bodyText = JSON.stringify(payloadJSON, null, 2);
+        // 3. Enviar a Power Automate silenciosamente por internet (Versión 2.0)
+        try {
+            const response = await fetch(POWER_AUTOMATE_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payloadJSON)
+            });
 
-        // 3. Generar el enlace Mailto
-        // CAMBIA ESTE CORREO POR LA BANDEJA QUE RECIBIRÁ LOS REPORTES (ej: reportes@tuempresa.com)
-        const emailDestino = "glastra@me-elecmetal.com"; 
-        const asunto = `NUEVO_REPORTE_TERRENO - ${reporteMaestro.Cliente} - ${reporteMaestro.Fecha_Servicio}`;
-        
-        const mailtoLink = `mailto:${emailDestino}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(bodyText)}`;
-
-        // 4. Abrir la app de correo del usuario
-        window.location.href = mailtoLink;
-
-        // 5. Restablecer la interfaz
-        setTimeout(() => {
-            reportForm.reset();
-            tecnicosDetalle = [];
-            renderTechList();
-            containerLogistica.classList.remove('visible');
-            containerComercial.classList.remove('visible');
-            
+            // Power Automate HTTP responde con un 202 Accepted o 200 OK
+            if(response.ok || response.status === 202) {
+                alert('✅ ¡Reporte enviado exitosamente a la base de datos central!');
+                
+                // Restablecer la interfaz solo si fue exitoso
+                reportForm.reset();
+                tecnicosDetalle = [];
+                renderTechList();
+                containerLogistica.classList.remove('visible');
+                containerComercial.classList.remove('visible');
+            } else {
+                alert(`Hubo un error de conexión con el servidor (Código: ${response.status}). Intenta nuevamente.`);
+            }
+        } catch (error) {
+            console.error('Error enviando el reporte:', error);
+            alert('Error crítico de red. Revisa tu conexión a internet o contacta soporte.');
+        } finally {
+            // Restaurar botón
             btnSubmit.innerText = btnOriginalText;
             btnSubmit.disabled = false;
-        }, 2000);
+        }
     });
 });
